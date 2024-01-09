@@ -1,11 +1,15 @@
 {
   const select = {
-  templateOf: {
-    books: "#template-book",
-  },
-  containerOf: {
-    listBooks: ".books-list",
+    templateOf: {
+      books: "#template-book",
     },
+    containerOf: {
+      listBooks: ".books-list",
+    },
+    book: {
+      image: '.book__image',
+      id: 'data-id',
+    }
   };
 
   const classNames = {
@@ -21,5 +25,21 @@
     } 
   }
 
+  const favoriteBooks = [];
+
+  function initActions () {
+    const books = document.querySelectorAll(select.book.image);
+
+    for (let selectBook of books) {
+      selectBook.addEventListener('dblclick', function(event) {
+        event.preventDefault(); 
+        selectBook.classList.add('favorite');
+        const bookId = selectBook.getAttribute(select.book.id);
+        favoriteBooks.push(bookId);
+      });
+    }
+  }
+
   render();
+  initActions();
 }
