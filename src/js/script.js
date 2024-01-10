@@ -35,27 +35,28 @@
   const favoriteBooks = [];
 
   function initActions () {
-    const books = document.querySelectorAll(select.book.image);
+    const books = document.querySelector(select.containerOf.listBooks);
 
-    for (let selectBook of books) {
-      selectBook.addEventListener('dblclick', function(event) {
-        event.preventDefault(); 
+    books.addEventListener('dblclick', function(event) {
+      event.preventDefault(); 
 
-        const bookId = selectBook.getAttribute(select.book.id);
+      const book = event.target.offsetParent;
 
+      if (book && book.classList.contains('book__image')) {
+        const bookId = book.getAttribute(select.book.id);
+        
         if (favoriteBooks.includes(bookId)) {
-          selectBook.classList.remove(classNames.library.imageFavorite);
+          book.classList.remove(classNames.library.imageFavorite);
           const index = favoriteBooks.indexOf(bookId);
           if (index != -1) {
             favoriteBooks.splice(index, 1);
           }
         } else {
-          selectBook.classList.add(classNames.library.imageFavorite);
+          book.classList.add(classNames.library.imageFavorite);
           favoriteBooks.push(bookId);
         }
-        console.log({favoriteBooks});
-      });
-    }
+      }
+    }); 
   }
 
   render();
