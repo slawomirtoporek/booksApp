@@ -19,6 +19,9 @@
     library: {
       imageFavorite: 'favorite',
     },
+    form: {
+      hiddenImage: 'hidden',
+    },
   };
 
   const templates = {
@@ -74,13 +77,34 @@
         console.log({filters});
 
         if (clickedElement.checked == true) {
-          filters.push(clickedElement.value);  
+          filters.push(clickedElement.value); 
         } else {
             const index = filters.indexOf(clickedElement.value);
             filters.splice(index, 1);
         }
+        filterBooks(); 
       }
     });
+  }
+
+  function filterBooks () { 
+    for (const book of dataSource.books) {
+      let shouldBeHidden = false;
+      const hiddenBook = document.querySelector('.book__image[data-id="' + book.id + '"]');
+
+      for (const filter of filters) {
+        if (!book.details[filter]) {
+          shouldBeHidden = true;
+          console.log(book);
+          break; 
+        }
+      }
+      if (shouldBeHidden == true) {
+        hiddenBook.classList.add(classNames.form.hiddenImage);
+      } else {
+        hiddenBook.classList.remove((classNames.form.hiddenImage));
+      }
+    }
   }
 
   render();
