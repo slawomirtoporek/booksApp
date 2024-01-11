@@ -10,6 +10,9 @@
       image: '.book__image',
       id: 'data-id',
     },
+    form: {
+      filter: '.filters',
+    } 
   };
 
   const classNames = {
@@ -33,6 +36,7 @@
   }
 
   const favoriteBooks = [];
+  const filters = [];
 
   function initActions () {
     const books = document.querySelector(select.containerOf.listBooks);
@@ -40,23 +44,43 @@
     books.addEventListener('dblclick', function(event) {
       event.preventDefault(); 
 
-      const book = event.target.offsetParent;
+      const clickedElement = event.target.offsetParent;
 
-      if (book && book.classList.contains('book__image')) {
-        const bookId = book.getAttribute(select.book.id);
+      if (clickedElement && clickedElement.classList.contains('book__image')) {
+        const bookId = clickedElement.getAttribute(select.book.id);
         
         if (favoriteBooks.includes(bookId)) {
-          book.classList.remove(classNames.library.imageFavorite);
+          clickedElement.classList.remove(classNames.library.imageFavorite);
           const index = favoriteBooks.indexOf(bookId);
           if (index != -1) {
             favoriteBooks.splice(index, 1);
           }
         } else {
-          book.classList.add(classNames.library.imageFavorite);
+          clickedElement.classList.add(classNames.library.imageFavorite);
           favoriteBooks.push(bookId);
         }
       }
     }); 
+
+    const formFilter = document.querySelector(select.form.filter);
+
+    formFilter.addEventListener('click', function(event) {
+      const clickedElement = event.target;
+
+      if (clickedElement && clickedElement.tagName === 'INPUT' 
+      && clickedElement.type === 'checkbox' 
+      && clickedElement.name === 'filter') {
+        console.log(clickedElement.value);
+        console.log({filters});
+
+        if (clickedElement.checked == true) {
+          filters.push(clickedElement.value);  
+        } else {
+            const index = filters.indexOf(clickedElement.value);
+            filters.splice(index, 1);
+        }
+      }
+    });
   }
 
   render();
