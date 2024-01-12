@@ -1,10 +1,10 @@
 {
   const select = {
     templateOf: {
-      books: "#template-book",
+      books: '#template-book',
     },
     containerOf: {
-      listBooks: ".books-list",
+      listBooks: '.books-list',
     },
     book: {
       image: '.book__image',
@@ -104,8 +104,8 @@
           if (clickedElement.checked == true) {
             thisBooksList.filters.push(clickedElement.value); 
           } else {
-              const index = thisBooksList.filters.indexOf(clickedElement.value);
-              thisBooksList.filters.splice(index, 1);
+            const index = thisBooksList.filters.indexOf(clickedElement.value);
+            thisBooksList.filters.splice(index, 1);
           }
           thisBooksList.filterBooks(); 
         }
@@ -147,4 +147,6 @@
   }
   
   const app = new BooksList();
+
+  app();
 }
